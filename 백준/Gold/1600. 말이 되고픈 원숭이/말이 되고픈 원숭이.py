@@ -1,4 +1,3 @@
-#말이되고픈 원숭이 
 import sys
 from collections import deque
 input = sys.stdin.readline
@@ -37,5 +36,5 @@ w, h = map(int, input().split())
 board = [list(map(int, input().split())) for _ in range(h)] 
 visited = [[[-1] * (k+1) for _ in range(w)] for _ in range(h)]
 
-visited[0][0][0] = 0 #본인 위치 세어야 하나요..?
+visited[0][0][0] = 0 
 print(bfs(0, 0, 0))
