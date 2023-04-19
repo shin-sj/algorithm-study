@@ -1,27 +1,27 @@
-#촌수 계산
 import sys
 from collections import deque
 input = sys.stdin.readline
-
-def bfs(start) : 
+def bfs(x) :
     dQ = deque()
-    dQ.append(start)
-    while dQ :
-        start1 = dQ.popleft() 
-        for i in graph[start1] :
-            if visited[i] == -1 :
-                visited[i] = visited[start1]+1
-                dQ.append(i)
+    dQ.append(x)
     
-n = int(input()) #사람 수 
-x, y = map(int, input().split()) # 촌수 계산해야하는 두사람의 번호
-m = int(input()) #관계의 개수
-graph = [[] for _ in range(n+1)]
+    while dQ :
+        start = dQ.popleft() 
+        for i in board[start] :
+            if visited[i] == -1 :
+                visited[i] = visited[start] + 1
+                dQ.append(i)      
+            
+n = int(input()) #전체 사람의 수 
+a, b = map(int, input().split()) #촌수를 계산해야 하는 서로 다른 두 사람의 번호 
+m = int(input()) #관계의 수 
+board = [[] for _ in range(n+1)]
 visited = [-1 for _ in range(n+1)]
 for _ in range(m) :
-    a, b = map(int, input().split())
-    graph[a].append(b)
-    graph[b].append(a)
-visited[x] = 0
-bfs(x)
-print(visited[y])
+    x, y = map(int, input().split())
+    board[x].append(y)
+    board[y].append(x)
+    
+visited[a] = 0
+bfs(a)
+print(visited[b]) 
