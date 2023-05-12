@@ -1,13 +1,14 @@
+import sys
+from collections import Counter
+
 def solution(nums):
     answer = 0
-    adict = {}
-    n = len(nums) / 2
-    
-    #딕셔너리 포켓몬:갯수
-    for a in nums :
-        adict[a] = nums.count(a) 
-        
-    if len(adict) >= n :
-        return n
+    cnt = len(nums)//2
+    adict = Counter(nums)
+    # print(adict)
+    if len(adict) >= cnt :
+        answer = cnt
     else :
-        return len(adict)
+        answer = len(adict)
+    
+    return answer
