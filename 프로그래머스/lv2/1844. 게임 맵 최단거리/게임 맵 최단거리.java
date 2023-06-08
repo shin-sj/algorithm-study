@@ -1,42 +1,39 @@
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Queue;
 
 class Solution {
-    int[] dx = {0,0,1,-1};
-    int[] dy = {1,-1,0,0};
-    public int solution(int[][] maps) {
-        int answer = 0;
-        int[][] visited = new int[maps.length][maps[0].length];
-        visited[0][0] = 1;
-        bfs(maps, visited, 0, 0);
-        
-        answer = visited[maps.length-1][maps[0].length-1];
-        if(answer == 0) {
-            return -1;
-        }
-        
-        return answer;
-    }
-    
-    public void bfs(int[][] maps, int[][] visited, int x, int y) {
-        Queue<int[]> queue = new LinkedList<>();
-        queue.add(new int[]{x, y});
-        while(!queue.isEmpty()) {
-            int current[] = queue.poll();
-            int cx = current[0];
-            int cy = current[1];
-            
-            for(int i = 0; i < 4; i++) {
-                int xx = cx + dx[i];
-                int yy = cy + dy[i];
-                if(xx < 0 || xx >= maps.length || yy < 0 || yy >= maps[0].length) {
-                    continue;
-                }
-                if(maps[xx][yy] == 1 && visited[xx][yy] == 0) {
-                    visited[xx][yy] = visited[cx][cy] + 1;
-                    queue.add(new int[]{xx, yy});
+    private int[] dx = {0, 0, 1, -1};
+    private int[] dy = {1, -1, 0, 0};
+
+    public void bfs(int[][] maps) {
+        int xEnd = maps.length;
+        int yEnd = maps[0].length;
+        Queue<int[]> queue = new ArrayDeque<>();
+        queue.offer(new int[]{0, 0});
+
+        while (!queue.isEmpty()) {
+            int[] current = queue.poll();
+            int x = current[0];
+            int y = current[1];
+
+            for (int i = 0; i < 4; i++) {
+                int xx = x + dx[i];
+                int yy = y + dy[i];
+
+                if (xx >= 0 && xx < xEnd && yy >= 0 && yy < yEnd) {
+                    if (maps[xx][yy] == 1) {
+                        maps[xx][yy] = maps[x][y] + 1;
+                        queue.offer(new int[]{xx, yy});
+                    }
                 }
             }
         }
-        
+    }
+
+    public int solution(int[][] maps) {
+        int xEnd = maps.length;
+        int yEnd = maps[0].length;
+        bfs(maps);
+        return (maps[xEnd - 1][yEnd - 1] != 1) ? maps[xEnd - 1][yEnd - 1] : -1;
     }
 }
